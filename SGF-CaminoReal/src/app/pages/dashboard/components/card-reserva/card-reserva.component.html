@@ -1,0 +1,54 @@
+<div class="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 hover:shadow-md transition-shadow">
+  <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+    <div class="flex-1">
+      <div class="flex flex-wrap items-center gap-2 mb-2">
+        <h3 class="text-base sm:text-lg md:text-xl font-bold text-gray-900">{{ reserva.titulo }}</h3>
+        @if (reserva.estado === 'confirmada') {
+          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+            Confirmada
+          </span>
+        } @else {
+          <span class="px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-800">
+            Cancelada
+          </span>
+        }
+        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-800">
+          {{ reserva.etiquetaTipo }}
+        </span>
+      </div>
+      <p class="text-xs sm:text-sm text-gray-600">ID: {{ reserva.id }}</p>
+    </div>
+    <div class="text-left sm:text-right">
+      <p class="text-lg sm:text-xl md:text-2xl font-bold text-purple-700">S/.{{ reserva.monto }}</p>
+      <p class="text-xs sm:text-sm text-gray-600">{{ reserva.resumenLinea }}</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3 sm:gap-4 mb-4">
+    @for (col of reserva.detalleCols; track col.label) {
+      <div class="flex items-center text-sm">
+        <i class="{{ col.icon }} text-gray-400 mr-2"></i>
+        <div>
+          <p class="text-gray-600">{{ col.label }}</p>
+          <p class="font-semibold">{{ col.value }}</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-4 border-t border-gray-200">
+    <button
+      class="w-full sm:flex-1 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors cursor-pointer whitespace-nowrap"
+      (click)="onVer()">
+      <i class="ri-eye-line mr-2"></i>Ver Detalles
+    </button>
+
+    @if (reserva.estado === 'confirmada') {
+      <button
+        class="w-full sm:flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors cursor-pointer whitespace-nowrap"
+        (click)="onCancelar()">
+        <i class="ri-close-line mr-2"></i>Cancelar Reserva
+      </button>
+    }
+  </div>
+</div>

@@ -1,0 +1,261 @@
+<div
+  class="relative bg-cover bg-center text-white py-16 sm:py-20"
+  style="background-image: url('assets/img/dashboard-bg.jpeg');"
+>
+  <div class="absolute inset-0 bg-black/50"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div
+      class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"
+    >
+      <div class="max-w-xl text-center lg:text-left mx-auto lg:mx-0">
+        <h1 class="text-3xl sm:text-4xl lg:text-6xl font-bold mb-3">
+          Bienvenido!
+        </h1>
+        <p class="text-base sm:text-lg lg:text-xl text-teal-100">
+          Gestiona todas tus reservas en un solo lugar.
+        </p>
+      </div>
+
+      <div
+        class="flex justify-center lg:justify-end gap-2 lg:gap-3"
+      >
+        <!-- Nueva / Nueva Reserva -->
+        <button
+          (click)="openReservaModal()"
+          class="bg-white text-teal-600 hover:bg-teal-50
+                 px-3 py-2 text-xs
+                 sm:px-6 sm:py-3 sm:text-base
+                 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap"
+        >
+          <i class="ri-add-line mr-1 sm:mr-2"></i>
+          <span class="sm:hidden">Reservar</span>
+          <span class="hidden sm:inline">Nueva Reserva</span>
+        </button>
+
+        <!-- Modificar / Modificar Reserva -->
+        <button
+          class="bg-indigo-600 hover:bg-indigo-700 text-white
+                 px-3 py-2 text-xs
+                 sm:px-6 sm:py-3 sm:text-base
+                 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap"
+                 (click)="openBuscarReservaModal()"
+        >
+          <i class="ri-edit-line mr-1 sm:mr-2"></i>
+          <span class="sm:hidden">Modificar</span>
+          <span class="hidden sm:inline">Modificar Reserva</span>
+        </button>
+
+        <!-- Cancelar / Cancelar Reserva -->
+        <button (click)="openCancelarBuscarModal()"
+          class="bg-red-600 hover:bg-red-700 text-white
+                 px-3 py-2 text-xs
+                 sm:px-6 sm:py-3 sm:text-base
+                 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap"
+        >
+          <i class="ri-calendar-event-line mr-1 sm:mr-2"></i>
+          <span class="sm:hidden">Cancelar</span>
+          <span class="hidden sm:inline">Cancelar Reserva</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Navegación secundaria -->
+<section class="py-6 sm:py-8 bg-white border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Tabs principales -->
+    <div class="flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6">
+      <button
+        (click)="mainTab.set('reservas')"
+        class="px-3 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap"
+        [class.bg-purple-500]="mainTab() === 'reservas'"
+        [class.text-white]="mainTab() === 'reservas'"
+        [class.bg-gray-100]="mainTab() !== 'reservas'"
+        [class.text-gray-700]="mainTab() !== 'reservas'">
+        <i class="ri-file-list-3-line mr-1 sm:mr-2"></i>
+        <span class="hidden xs:inline">Historial</span>
+        <span class="hidden sm:inline">Historial de Reservas</span>
+      </button>
+
+      <button
+        (click)="mainTab.set('perfil')"
+        class="px-3 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200">
+        <i class="ri-user-line mr-1 sm:mr-2"></i>
+        Perfil
+      </button>
+
+      @if (showClientes()) {
+        <button
+          (click)="mainTab.set('clientes')"
+          class="px-3 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200">
+          <i class="ri-group-line mr-1 sm:mr-2"></i>
+          Clientes
+        </button>
+      }
+
+      @if (showReportes()) {
+        <button
+          (click)="mainTab.set('reportes')"
+          class="px-3 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200">
+          <i class="ri-bar-chart-box-line mr-1 sm:mr-2"></i>
+          Reportes
+        </button>
+      }
+
+      @if (showAdmin()) {
+        <button
+          (click)="mainTab.set('admin')"
+          class="px-3 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200">
+          <i class="ri-settings-3-line mr-1 sm:mr-2"></i>
+          Administración
+        </button>
+      }
+    </div>
+
+    @if (mainTab() === 'reservas') {
+      <!-- Subtabs -->
+      <div class="flex flex-wrap items-center gap-2 sm:gap-4 mb-4 sm:mb-6">
+        <button
+          (click)="setSubTab('habitaciones')"
+          class="px-3 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap"
+          [class.bg-purple-500]="subTab() === 'habitaciones'"
+          [class.text-white]="subTab() === 'habitaciones'"
+          [class.bg-gray-100]="subTab() !== 'habitaciones'"
+          [class.text-gray-700]="subTab() !== 'habitaciones'">
+          <i class="ri-hotel-bed-line mr-1 sm:mr-2"></i>
+          Habitaciones
+        </button>
+        <button
+          (click)="setSubTab('eventos')"
+          class="px-3 py-2 sm:px-6 sm:py-3 rounded-lg font-semibold text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap"
+          [class.bg-purple-500]="subTab() === 'eventos'"
+          [class.text-white]="subTab() === 'eventos'"
+          [class.bg-gray-100]="subTab() !== 'eventos'"
+          [class.text-gray-700]="subTab() !== 'eventos'">
+          <i class="ri-calendar-event-line mr-1 sm:mr-2"></i>
+          Eventos
+        </button>
+      </div>
+
+      <!-- Filtros -->
+      <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+        <span class="text-xs sm:text-sm font-medium text-gray-700">
+          Filtrar por:
+        </span>
+        <div class="flex flex-wrap gap-2">
+          <button
+            (click)="setStatusFilter('todas')"
+            class="px-3 py-2 rounded-lg font-medium text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap"
+            [class.bg-purple-500]="statusFilter() === 'todas'"
+            [class.text-white]="statusFilter() === 'todas'"
+            [class.bg-gray-100]="statusFilter() !== 'todas'"
+            [class.text-gray-700]="statusFilter() !== 'todas'">
+            Todas
+          </button>
+          <button
+            (click)="setStatusFilter('confirmadas')"
+            class="px-3 py-2 rounded-lg font-medium text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap"
+            [class.bg-purple-500]="statusFilter() === 'confirmadas'"
+            [class.text-white]="statusFilter() === 'confirmadas'"
+            [class.bg-gray-100]="statusFilter() !== 'confirmadas'"
+            [class.text-gray-700]="statusFilter() !== 'confirmadas'">
+            Confirmadas
+          </button>
+          <button
+            (click)="setStatusFilter('canceladas')"
+            class="px-3 py-2 rounded-lg font-medium text-xs sm:text-sm transition-colors cursor-pointer whitespace-nowrap"
+            [class.bg-purple-500]="statusFilter() === 'canceladas'"
+            [class.text-white]="statusFilter() === 'canceladas'"
+            [class.bg-gray-100]="statusFilter() !== 'canceladas'"
+            [class.text-gray-700]="statusFilter() !== 'canceladas'">
+            Canceladas
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+
+<!-- Contenido principal -->
+@if (mainTab() === 'reservas') {
+  <section class="py-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+       @if (filteredBookings().length === 0) {
+        <div class="bg-white rounded-xl border border-dashed border-gray-300 p-8 text-center">
+          <p class="text-base sm:text-lg font-semibold text-gray-900">
+            No tienes reservas registradas.
+          </p>
+        </div>
+      } @else {
+        <div class="grid grid-cols-1 gap-6">
+          @for (reserva of filteredBookings(); track reserva.id) {
+            <app-card-reserva
+              [reserva]="reserva"
+              (ver)="verDetalle(reserva)"
+              (cancelar)="cancelarReserva(reserva)"
+            />
+          }
+        </div>
+      }
+    </div>
+  </section>
+}
+
+@if (selectedDetail()) {
+  <app-reserva-detail-modal
+    [detail]="selectedDetail()!"
+    (close)="cerrarDetalle()" />
+}
+
+@if (mainTab() === 'clientes') {
+  <app-clientes-tabla
+    [clientes]="clientes()" />
+}
+
+@if (mainTab() === 'reportes') {
+  <app-dashboard-report
+  [bookings]="reservasDetalle()" />
+}
+
+@if (showReservaModal) {
+  <app-reserva-modal
+    (close)="closeReservaModal()" />
+}
+
+@if (showBuscarReservaModal) {
+  <app-buscar-reserva-modal
+    (close)="closeBuscarReservaModal()"
+    (notFound)="mostrarReservaNoEncontrada()" />
+}
+
+@if (showReservaNoEncontradaModal) {
+  <app-reserva-no-encontrada-modal
+    (close)="cerrarReservaNoEncontrada()" />
+}
+
+@if (showCancelarBuscarModal) {
+  <app-cancelar-reserva-buscar
+    (close)="closeCancelarBuscarModal()"
+    (reservaEncontrada)="onReservaEncontradaParaCancelar($event)"
+  />
+}
+
+@if (showConfirmarCancelarModal && reservaParaCancelar()) {
+  <app-cancelar-reserva-confirmar
+    [detail]="reservaParaCancelar()!"
+    (close)="closeConfirmarCancelarModal()"
+    (cancelacionExitosa)="onCancelacionExitosa()"
+  />
+}
+
+@if (showCancelacionExitosaModal && reservaParaCancelar()) {
+  <app-cancelar-reserva-exito
+    [detail]="reservaParaCancelar()!"
+    (close)="cerrarTodoYCargarDashboard()"
+  />
+}

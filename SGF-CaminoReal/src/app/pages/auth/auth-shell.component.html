@@ -1,0 +1,37 @@
+<div
+  class="min-h-screen w-full bg-center bg-cover flex items-center justify-center relative"
+  style="background-image: url('/assets/img/fundo-bg.jpeg');"
+>
+  <!-- Overlay oscuro -->
+  <div class="absolute inset-0 bg-black/45"></div>
+
+  <!-- Contenido centrado -->
+  <div class="relative flex w-full max-w-6xl items-center justify-between px-8">
+    <!-- Logo grande izquierda -->
+
+    <img
+      src="/assets/img/logo.png"
+      alt="Fundo Camino Real"
+      class="w-80 rounded-3xl"
+    />
+
+    <!-- Aquí se proyecta el formulario (login o signup) -->
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Footer -->
+  <footer
+    class="absolute bottom-0 left-0 right-0 flex items-center justify-between px-10 py-4 bg-black/70 text-xs text-gray-200"
+  >
+    <p class="text-gray-400 text-sm">© 2025 Fundo Camino Real - Todos los derechos reservados.</p>
+    <div class="flex gap-4 text-sm text-gray-400">
+        @for (method of paymentMethods(); track method.name) {
+        <img
+          [src]="method.icon"
+          [alt]="method.name"
+          class="{{ method.class }} w-auto opacity-80 hover:opacity-100 transition-opacity duration-200"
+          loading="lazy" />
+      }
+    </div>
+  </footer>
+</div>

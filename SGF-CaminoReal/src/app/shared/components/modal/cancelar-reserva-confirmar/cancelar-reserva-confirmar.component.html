@@ -1,0 +1,111 @@
+<div class="fixed inset-0 z-60 flex items-center justify-center">
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <div class="relative bg-white p-8 rounded-lg shadow-xl text-center w-[90%] max-w-3xl overflow-y-auto max-h-[90vh]">
+    <i class="ri-close-circle-line text-2xl text-red-500 mb-4"></i>
+
+    <h2 class="text-2xl font-bold text-gray-900 mb-2">
+      Cancelar Reserva
+    </h2>
+
+    <p class="text-gray-600 mb-6">
+      Lamentamos que necesites cancelar tu reserva. Revisa los detalles y confirma la cancelación.
+    </p>
+
+    <div class="space-y-6 text-left">
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Detalles de la Reserva</h2>
+        <div class="space-y-3">
+          <div class="flex justify-between py-2 border-b border-gray-200">
+            <span class="text-gray-600">ID de Reserva</span>
+            <span class="font-semibold text-gray-900">{{ detail.id }}</span>
+          </div>
+          <div class="flex justify-between py-2 border-b border-gray-200">
+            <span class="text-gray-600">Tipo</span>
+            <span class="font-semibold text-gray-900">{{ detail.tipoTexto }}</span>
+          </div>
+          @if (detail.tipo === 'room') {
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Habitación</span>
+              <span class="font-semibold text-gray-900">{{ detail.habitacion }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Check-in</span>
+              <span class="font-semibold text-gray-900">{{ detail.checkIn }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Check-out</span>
+              <span class="font-semibold text-gray-900">{{ detail.checkOut }}</span>
+            </div>
+          } @else {
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Espacio</span>
+              <span class="font-semibold text-gray-900">{{ detail.espacio }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Fecha</span>
+              <span class="font-semibold text-gray-900">{{ detail.fechaEvento }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Hora</span>
+              <span class="font-semibold text-gray-900">{{ detail.horaEvento }}</span>
+            </div>
+          }
+          <div class="flex justify-between py-2">
+            <span class="text-gray-600">Total Pagado</span>
+            <span class="text-xl font-bold text-gray-900">S/{{ detail.total }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-bold text-gray-900 mb-4">Motivo de Cancelación</h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">
+              Por favor cuéntanos por qué cancelas*
+            </label>
+            <textarea
+              rows="4"
+              maxlength="500"
+              [(ngModel)]="motivo"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-red-300 focus:border-red-300 text-sm resize-none"
+              placeholder="Tu opinión nos ayuda a mejorar nuestros servicios..."
+              required
+            ></textarea>
+            <p class="text-xs text-gray-500 mt-1">
+              {{ motivo.length }}/500 caracteres
+            </p>
+          </div>
+          <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <div class="flex items-start">
+              <i class="ri-alert-line text-yellow-600 text-xl mr-3 mt-1"></i>
+              <div>
+                <p class="text-sm font-semibold text-gray-900 mb-1">Advertencia</p>
+                <p class="text-sm text-gray-600">
+                  Esta acción no se puede deshacer. El reembolso se procesará según nuestra política de cancelación.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button
+              class="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap"
+              (click)="confirmar()"
+            >
+              <i class="ri-close-circle-line mr-2"></i>
+              Confirmar Cancelación
+            </button>
+            <button
+              class="bg-gray-500 cursor-pointer text-white px-6 py-3 rounded-lg font-semibold"
+              (click)="volverABuscar()"
+            >
+              <i class="ri-close-line mr-1"></i>
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center">
+  <!-- Fondo oscuro -->
+  <div class="absolute inset-0 bg-black/40" (click)="close.emit()">
+  </div>
+
+  <!-- Contenido -->
+  <div class="relative bg-white rounded-xl shadow-lg w-[90%] max-w-md p-8 animate-scaleIn">
+
+    <h3 class="text-lg text-center font-bold text-gray-900 mb-2">
+      ¿Qué deseas reservar?
+    </h3>
+    <p class="text-sm text-center text-gray-600 mb-6">
+      Selecciona el tipo de reserva que deseas realizar
+    </p>
+
+    <!-- Botones -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <button routerLink="/reserva-habitacion"
+        class="w-full py-3 rounded-lg bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition cursor-pointer">
+        🏨 Habitaciones
+      </button>
+
+      <button routerLink="/reserva-evento"
+        class="w-full py-3 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700 transition cursor-pointer">
+        🎉 Eventos
+      </button>
+    </div>
+
+    <!-- Cerrar -->
+    <button class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 cursor-pointer"
+      (click)="close.emit()">
+      <i class="ri-close-line"></i>
+    </button>
+  </div>
+</div>

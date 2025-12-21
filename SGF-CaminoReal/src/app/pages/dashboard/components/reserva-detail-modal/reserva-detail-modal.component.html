@@ -1,0 +1,144 @@
+@if (detail) {
+  <div class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
+    <!-- Header -->
+    <div class="sticky top-0 bg-white border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+      <div>
+        <h2 class="text-lg md:text-2xl font-bold text-gray-900">Detalles de Reserva</h2>
+        <p class="text-xs md:text-sm text-gray-500">
+          {{ detail.tipoTexto }} · ID {{ detail.id }}
+        </p>
+      </div>
+        <button
+          type="button"
+          (click)="onClose()"
+          class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors cursor-pointer">
+          <i class="ri-close-line text-xl text-gray-600"></i>
+        </button>
+      </div>
+
+      <!-- Body -->
+      <div class="px-4 sm:px-6 py-4 sm:py-5 space-y-6 sm:space-y-8">
+        <!-- Información de la reserva -->
+        <section>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-semibold text-gray-900">Información de la Reserva</h3>
+            <span
+              class="px-3 py-1 rounded-full text-xs font-semibold"
+              [class.bg-green-100]="detail.estado === 'confirmada'"
+              [class.text-green-800]="detail.estado === 'confirmada'"
+              [class.bg-red-100]="detail.estado === 'cancelada'"
+              [class.text-red-800]="detail.estado === 'cancelada'">
+              {{ detail.estado | titlecase }}
+            </span>
+          </div>
+
+          <!-- Habitación -->
+          @if (detail.tipo === 'room') {
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Tipo</span>
+                <span class="font-semibold">{{ detail.tipoTexto }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Habitación</span>
+                <span class="font-semibold">{{ detail.habitacion }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Check-in</span>
+                <span class="font-semibold">{{ detail.checkIn }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Check-out</span>
+                <span class="font-semibold">{{ detail.checkOut }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Noches</span>
+                <span class="font-semibold">{{ detail.noches }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Huéspedes</span>
+                <span class="font-semibold">{{ detail.huespedes }}</span>
+              </div>
+              <div class="flex justify-between py-2">
+                <span class="text-gray-600">Total</span>
+                <span class="text-xl font-bold text-purple-700">S/.{{ detail.total }}</span>
+              </div>
+            </div>
+          }
+
+          <!-- Evento -->
+          @else {
+            <div class="space-y-3 text-sm">
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Tipo de Evento</span>
+                <span class="font-semibold">{{ detail.titulo }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Espacio</span>
+                <span class="font-semibold">{{ detail.espacio }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Fecha</span>
+                <span class="font-semibold">{{ detail.fechaEvento }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Hora</span>
+                <span class="font-semibold">{{ detail.horaEvento }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Duración</span>
+                <span class="font-semibold">{{ detail.duracionHoras }} horas</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-100">
+                <span class="text-gray-600">Invitados</span>
+                <span class="font-semibold">{{ detail.invitados }}</span>
+              </div>
+              <div class="flex justify-between py-2">
+                <span class="text-gray-600">Total</span>
+                <span class="text-xl font-bold text-purple-700">S/.{{ detail.total }}</span>
+              </div>
+            </div>
+          }
+        </section>
+
+        <!-- Información del cliente -->
+        <section>
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Información del Cliente</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between py-2 border-b border-gray-100">
+              <span class="text-gray-600">Nombre</span>
+              <span class="font-semibold">{{ detail.clienteNombre }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-100">
+              <span class="text-gray-600">Email</span>
+              <span class="font-semibold">{{ detail.clienteEmail }}</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-gray-600">Teléfono</span>
+              <span class="font-semibold">{{ detail.clienteTelefono }}</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Fechas importantes -->
+        <section>
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">Fechas Importantes</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between py-2 border-b border-gray-100">
+              <span class="text-gray-600">Fecha de Creación</span>
+              <span class="font-semibold">{{ detail.fechaCreacion }}</span>
+            </div>
+            <div class="flex justify-between py-2">
+              <span class="text-gray-600">Fecha de Pago</span>
+              <span class="font-semibold">
+                {{ detail.fechaPago || 'Pendiente' }}
+              </span>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+}

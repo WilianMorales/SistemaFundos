@@ -1,0 +1,54 @@
+<div
+  class="relative bg-white rounded-xl shadow-lg overflow-hidden border-2 transition-all cursor-pointer"
+  [class.border-purple-600]="isSelected"
+  [class.border-transparent]="!isSelected"
+  [class.opacity-50]="isDisabled"
+  [class.cursor-not-allowed]="isDisabled"
+  (click)="onSelect()"
+>
+  @if (isSelected) {
+    <div
+      class="absolute top-4 right-4 bg-teal-600 text-white px-3 py-1 rounded-full font-semibold flex items-center space-x-1">
+      <i class="ri-check-line mr-1"></i>
+      <span>Seleccionado</span>
+    </div>
+  }
+
+  @if (isDisabled) {
+    <div
+      class="absolute top-4 left-4 bg-red-600 text-white px-3 py-1 rounded-full font-semibold"
+    >
+      Reservada
+    </div>
+  }
+
+  <div class="relative h-64 w-full">
+    <img class="w-full h-full object-cover object-top" [src]="imagen" [alt]="nombre" />
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">{{ nombre }}</h3>
+        <p class="text-gray-600 text-sm">
+          <i class="ri-group-line mr-1"></i>
+          Capacidad hasta {{ capacidad }} personas
+        </p>
+      </div>
+      <div class="text-right">
+        <p class="text-2xl font-bold text-purple-600">S/.{{ renta | number }}</p>
+        <p class="text-sm text-gray-600">Alquiler espacio</p>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <h4 class="font-semibold text-gray-900 mb-2">Características:</h4>
+      <div class="grid grid-cols-2 gap-2">
+        @for (car of caracteristicas; track $index) {
+          <div class="flex items-center text-xs text-gray-600">
+            <i class="ri-checkbox-circle-fill text-purple-600 mr-2"></i>{{ car }}
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

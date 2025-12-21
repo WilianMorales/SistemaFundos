@@ -1,0 +1,373 @@
+<section
+  class="relative w-full h-[460px] bg-cover bg-center flex items-center"
+  style="background-image: url('/assets/img/fundo-bg.jpeg');"
+>
+  <div class="absolute inset-0 bg-black/40"></div>
+
+  <div class="relative max-w-6xl mx-auto px-4 text-center flex flex-col items-center">
+    <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight">
+      Bienvenido a<br />
+      Fundo Camino Real
+    </h1>
+
+    <p class="mt-4 text-lg text-white max-w-xl">
+      El mejor lugar para pasar y disfrutar de una experiencia única.
+    </p>
+
+    <button type="button" (click)="openReservaModal()"
+      class="mt-6 inline-flex items-center gap-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-3 rounded-full text-sm shadow-lg cursor-pointer"
+    >
+      <span class="text-lg">🛎</span>
+      Reservando ahora
+    </button>
+  </div>
+</section>
+
+@if (showReservaModal) {
+  <app-reserva-modal
+    (close)="closeReservaModal()" />
+}
+
+<!-- SECCION CONOCENOS -->
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+    <div>
+      <!-- Main image -->
+      <img
+        src="/assets/images/foto-1.jpeg"
+        class="rounded-2xl w-full h-[380px] object-cover shadow-md"
+        alt="Fundo Camino Real"
+      />
+
+      <!-- Three small images -->
+      <div class="grid grid-cols-3 gap-4 mt-4">
+        <img
+          src="/assets/images/foto-2.jpeg"
+          class="rounded-xl h-32 w-full object-cover shadow"
+          alt="Imagen 1"
+        />
+        <img
+          src="/assets/images/foto-3.jpeg"
+          class="rounded-xl h-32 w-full object-cover shadow"
+          alt="Imagen 2"
+        />
+        <img
+          src="/assets/images/foto-4.jpeg"
+          class="rounded-xl h-32 w-full object-cover shadow"
+          alt="Imagen 3"
+        />
+      </div>
+    </div>
+
+    <!-- RIGHT TEXT -->
+    <div>
+      <p class="text-red-500 font-semibold">Conócenos</p>
+
+      <h2 class="text-4xl font-bold text-gray-900 leading-tight mt-2">
+        Fundo Camino Real: Confort y<br />
+        Calidad en Cada Estancia
+      </h2>
+
+      <p class="mt-4 text-gray-600 leading-relaxed">
+        Bienvenido a Fundo Camino Real, el lugar ideal para hospedarse y disfrutar de una
+        experiencia única. Contamos con cómodas habitaciones y los mejores servicios para
+        garantizarte una estancia placentera, tranquila y llena de confort.
+        <br><br>
+        ¡Tu descanso es nuestra prioridad!
+        <br><br>
+        ¡Ven y vive una experiencia única donde la naturaleza, la diversión y la tranquilidad
+        se combinan perfectamente!
+      </p>
+
+      <!-- FEATURES -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
+
+        <div class="bg-white shadow-lg rounded-xl px-4 py-6 text-center border">
+          <div class="text-red-500 text-3xl">🏨</div>
+          <p class="mt-2 font-bold text-gray-900">+20</p>
+          <p class="text-gray-500 text-sm">Habitaciones</p>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-xl px-4 py-6 text-center border">
+          <div class="text-red-500 text-3xl">🐶</div>
+          <p class="mt-2 font-bold text-gray-900">Pet Friendly</p>
+          <p class="text-gray-500 text-sm">Zona segura</p>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-xl px-4 py-6 text-center border">
+          <div class="text-red-500 text-3xl">📶</div>
+          <p class="mt-2 font-bold text-gray-900">WiFi</p>
+          <p class="text-gray-500 text-sm">Libre</p>
+        </div>
+
+        <div class="bg-white shadow-lg rounded-xl px-4 py-6 text-center border">
+          <div class="text-red-500 text-3xl">🅿️</div>
+          <p class="mt-2 font-bold text-gray-900">Cochera</p>
+          <p class="text-gray-500 text-sm">Gratuita</p>
+        </div>
+      </div>
+
+      <!-- BUTTON -->
+      <button type="button"
+        class="mt-8 bg-red-500 hover:bg-red-600 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition"
+        routerLink="/acerca-nosotros"
+      >
+        Más sobre nosotros
+      </button>
+    </div>
+  </div>
+</section>
+
+
+<!-- NUESTROS SERVICIOS -->
+<section class="py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-6 text-center">
+
+    <!-- Títulos -->
+    <h2 class="text-4xl font-bold text-gray-900">Nuestros Servicios</h2>
+    <p class="text-gray-600 mt-2">
+      Descubre todo lo que Fundo Camino Real tiene para ofrecerte.
+    </p>
+
+    <!-- GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+
+      <!-- Tarjeta 1 -->
+      <div class="bg-white shadow-md rounded-2xl p-10 border text-center">
+        <img src="/assets/icons/areas-verdes.jpg" class="w-16 mx-auto" />
+        <h3 class="text-2xl font-semibold mt-6">Áreas verdes</h3>
+        <p class="text-gray-600 mt-3">
+          Disfruta de caminatas, paseos o simplemente relajarte en la naturaleza que rodea el fundo.
+        </p>
+      </div>
+
+      <!-- Tarjeta 2 -->
+      <div class="bg-white shadow-md rounded-2xl p-10 border text-center">
+        <img src="/assets/icons/comida.png" class="w-16 mx-auto" />
+        <h3 class="text-2xl font-semibold mt-6">Restaurante de Comida</h3>
+        <p class="text-gray-600 mt-3">
+          Deléitate con deliciosos platos preparados con ingredientes frescos y locales.
+        </p>
+      </div>
+
+      <!-- Tarjeta 3 -->
+      <div class="bg-white shadow-md rounded-2xl p-10 border text-center">
+        <img src="/assets/icons/piscina.png" class="w-16 mx-auto" />
+        <h3 class="text-2xl font-semibold mt-6">Piscina</h3>
+        <p class="text-gray-600 mt-3">
+          Disfruta de un refrescante baño y relájate en nuestras amplias áreas alrededor de la piscina.
+        </p>
+      </div>
+
+      <!-- Tarjeta 4 -->
+      <div class="bg-white shadow-md rounded-2xl p-10 border text-center">
+        <img src="/assets/icons/habitaciones.png" class="w-16 mx-auto" />
+        <h3 class="text-2xl font-semibold mt-6">Habitaciones</h3>
+        <p class="text-gray-600 mt-3">
+          Cómodas y acogedoras, diseñadas para garantizar un descanso pleno y relajante.
+        </p>
+      </div>
+
+      <!-- Tarjeta 5 -->
+      <div class="bg-white shadow-md rounded-2xl p-10 border text-center">
+        <img src="/assets/icons/estacionamiento.png" class="w-16 mx-auto" />
+        <h3 class="text-2xl font-semibold mt-6">Estacionamiento</h3>
+        <p class="text-gray-600 mt-3">
+          Espacios seguros y gratuitos para que dejes tu vehículo con total tranquilidad.
+        </p>
+      </div>
+
+      <!-- Tarjeta 6 -->
+      <div class="bg-white shadow-md rounded-2xl p-10 border text-center">
+        <img src="/assets/icons/deporte.png" class="w-16 mx-auto" />
+        <h3 class="text-2xl font-semibold mt-6">Area de fulbito y vóley</h3>
+        <p class="text-gray-600 mt-3">
+          Diviértete practicando deportes al aire libre en nuestras áreas de juegos.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- NUESTRAS TARIFAS -->
+<section id="habitaciones" class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Título -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Nuestras Habitaciones</h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Descubre nuestras opciones de alojamiento, cada una diseñada para brindarte la máxima comodidad y una experiencia única.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Habitación Estándar -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div class="h-48 overflow-hidden">
+          <img
+            src="/assets/images/habitaciones/h-estandar-1.webp"
+            alt="Habitación Estándar"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Habitación Estándar</h3>
+
+          <div class="flex items-center mb-3">
+            <span class="text-3xl font-bold text-blue-600">S/. 50</span>
+            <span class="text-lg text-gray-500 line-through ml-2">S/. 60</span>
+            <span class="text-gray-600 ml-2">/ noche</span>
+          </div>
+
+          <ul class="space-y-2 mb-6 text-gray-700">
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Cama 2 Plazas</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>WiFi gratuito</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>TV por cable</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Aire acondicionado</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Baño privado</li>
+          </ul>
+
+          <button
+            class="w-full bg-purple-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-purple-700 transition cursor-pointer"
+            [routerLink]="'/reserva-habitacion'"
+            [queryParams]="{ habitacion: 'Habitación Estándar' }">
+            Reservar Ahora
+          </button>
+        </div>
+      </div>
+
+      <!-- Suite Deluxe -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div class="h-48 overflow-hidden">
+          <img
+            src="/assets/images/habitaciones/h-suite-2.jpg"
+            alt="Habitación Suite Deluxe"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Habitación Suite Deluxe</h3>
+
+          <div class="flex items-center mb-3">
+            <span class="text-3xl font-bold text-blue-600">S/. 80</span>
+            <span class="text-lg text-gray-500 line-through ml-2">S/. 140</span>
+            <span class="text-gray-600 ml-2">/ noche</span>
+          </div>
+
+          <ul class="space-y-2 mb-6 text-gray-700">
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Cama Queen 2 Plz</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Ropero personal</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Baño privado</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Mini bar</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>WiFi, TV Cable</li>
+          </ul>
+
+          <button
+            class="w-full bg-purple-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-purple-700 transition cursor-pointer"
+            [routerLink]="'/reserva-habitacion'"
+            [queryParams]="{ habitacion: 'Habitación Suite Deluxe' }">
+            Reservar Ahora
+          </button>
+        </div>
+      </div>
+
+      <!-- Matrimonial Suite -->
+      <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+        <div class="h-48 overflow-hidden">
+          <img
+            src="/assets/images/habitaciones/h-matrimonial.jpg"
+            alt="Habitación Matrimonial"
+            class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Habitación Matrimonial</h3>
+
+          <div class="flex items-center mb-3">
+            <span class="text-3xl font-bold text-blue-600">S/. 90</span>
+            <span class="text-lg text-gray-500 line-through ml-2">S/. 120</span>
+            <span class="text-gray-600 ml-2">/ noche</span>
+          </div>
+
+          <ul class="space-y-2 mb-6 text-gray-700">
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>1 Cama King</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Baño amplio/Ducha</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Minibar</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Wifi, TV Cable</li>
+            <li class="flex items-center"><i class="ri-check-line text-green-500 mr-2"></i>Vista panorámica</li>
+          </ul>
+
+          <button
+            class="w-full bg-purple-600 text-white font-medium px-4 py-2 rounded-lg hover:bg-purple-700 transition cursor-pointer"
+            [routerLink]="'/reserva-habitacion'"
+            [queryParams]="{ habitacion: 'Habitación Matrimonial' }">
+            Reservar Ahora
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SECCION CONTACTO -->
+<section id="contacto" class="py-16 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Título -->
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900">Contáctanos</h2>
+      <p class="text-lg text-gray-600">Estamos aquí para ayudarte con cualquier consulta</p>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Ubicación -->
+      <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+        <div class="w-16 h-16 bg-purple-300 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="ri-map-pin-fill text-white text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Ubicación</h3>
+        <p class="text-gray-600">
+          Av. Principal 123<br>
+          Campiña la Merced, Laredo
+        </p>
+      </div>
+
+      <!-- Teléfono -->
+      <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+        <div class="w-16 h-16 bg-purple-300 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="ri-phone-fill text-white text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Teléfono</h3>
+        <p class="text-gray-600">
+          (+51) 999-999-999<br>
+          Disponible 24/7
+        </p>
+      </div>
+
+      <!-- Email -->
+      <div class="text-center p-6 bg-white rounded-lg shadow-sm">
+        <div class="w-16 h-16 bg-purple-300 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="ri-mail-fill text-white text-2xl"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Email</h3>
+        <p class="text-gray-600">
+          info&#64;caminoreal.com<br>
+          reservas&#64;caminoreal.com
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>

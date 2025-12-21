@@ -1,0 +1,328 @@
+<section class="py-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-2xl font-bold text-gray-900 mb-8">Reportes y Estadísticas</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div class="bg-linear-to-br from-teal-500 to-teal-600 rounded-xl shadow-lg p-6 text-white">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Ingresos Totales</h3>
+          <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+            <i class="ri-money-dollar-circle-line text-2xl"></i>
+          </div>
+        </div>
+        <p class="text-4xl font-bold mb-2">S/. {{ reportTotals().ingresosTotal | number }}</p>
+        <p class="text-teal-100 text-sm">Todas las reservas confirmadas</p>
+      </div>
+
+      <div class="bg-linear-to-br from-indigo-500 to-indigo-600 rounded-xl shadow-lg p-6 text-white">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Ingresos Habitaciones</h3>
+          <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+            <i class="ri-hotel-bed-line text-2xl"></i>
+          </div>
+        </div>
+        <p class="text-4xl font-bold mb-2">S/. {{ reportTotals().ingresosHabitaciones | number }}</p>
+        <p class="text-indigo-100 text-sm">
+          {{ reportTotals().reservasHabitaciones }} reservas de habitaciones
+        </p>
+      </div>
+
+      <div class="bg-linear-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Ingresos Eventos</h3>
+          <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+            <i class="ri-calendar-event-line text-2xl"></i>
+          </div>
+        </div>
+        <p class="text-4xl font-bold mb-2">S/. {{ reportTotals().ingresosEventos | number }}</p>
+        <p class="text-purple-100 text-sm">
+          {{ reportTotals().reservasEventos }} reservas de eventos
+        </p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+      <h3 class="text-xl font-bold text-gray-900 mb-6">Generar Reportes Visuales</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <button
+          (click)="setView('reservas')"
+          class="bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-4 rounded-lg font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
+          [class.ring-2]="activeView() === 'reservas'"
+          [class.ring-offset-2]="activeView() === 'reservas'"
+          [class.ring-white]="activeView() === 'reservas'">
+          <i class="ri-pie-chart-line text-xl"></i>Gráfico de Reservas
+        </button>
+
+        <button
+          (click)="setView('eventos')"
+          class="bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-6 py-4 rounded-lg font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
+          [class.ring-2]="activeView() === 'eventos'"
+          [class.ring-offset-2]="activeView() === 'eventos'"
+          [class.ring-white]="activeView() === 'eventos'">
+          <i class="ri-bar-chart-line text-xl"></i>Gráfico de Eventos
+        </button>
+
+        <button
+          (click)="setView('ingresos')"
+          class="bg-linear-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white px-6 py-4 rounded-lg font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
+          [class.ring-2]="activeView() === 'ingresos'"
+          [class.ring-offset-2]="activeView() === 'ingresos'"
+          [class.ring-white]="activeView() === 'ingresos'">
+          <i class="ri-line-chart-line text-xl"></i>Gráfico de Ingresos
+        </button>
+
+        <button
+          (click)="setView('mensual')"
+          class="bg-linear-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-6 py-4 rounded-lg font-semibold transition-all cursor-pointer whitespace-nowrap flex items-center justify-center gap-2"
+          [class.ring-2]="activeView() === 'mensual'"
+          [class.ring-offset-2]="activeView() === 'mensual'"
+          [class.ring-white]="activeView() === 'mensual'">
+          <i class="ri-calendar-line text-xl"></i>Reporte Mensual
+        </button>
+      </div>
+    </div>
+
+    @if (activeView() === 'reservas' || activeView() === 'eventos' || activeView() === 'ingresos'|| activeView() === 'mensual') {
+      <div class="px-4 py-6 sm:px-6 lg:px-8">
+        @if (activeView() === 'reservas') {
+          <!-- Gráfico de Reservas (estado) -->
+          <div class="p-2 sm:p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">
+              Gráfico de Reservas por Estado
+            </h3>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6 md:gap-10">
+              <!-- Donut estático (solo diseño) -->
+              <div class="relative w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56">
+                <svg viewBox="0 0 36 36" class="w-full h-full -rotate-90">
+                  <!-- fondo -->
+                  <circle
+                    cx="18" cy="18" r="15.9155"
+                    fill="none"
+                    stroke="#e5e7eb"
+                    stroke-width="3" />
+                  <!-- confirmadas (verde) -->
+                  <circle
+                    cx="18" cy="18" r="15.9155"
+                    fill="none"
+                    stroke="#10b981"
+                    stroke-width="3"
+                    stroke-dasharray="40 60"
+                    stroke-dashoffset="25" />
+                  <!-- canceladas (rojo) -->
+                  <circle
+                    cx="18" cy="18" r="15.9155"
+                    fill="none"
+                    stroke="#ef4444"
+                    stroke-width="3"
+                    stroke-dasharray="15 85"
+                    stroke-dashoffset="-15" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="text-center">
+                    <p class="text-[10px] sm:text-xs text-gray-500">Total</p>
+                    <p class="text-base sm:text-lg font-bold text-gray-900">
+                      {{ reportEstado().total }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Leyenda con datos reales -->
+              <div class="space-y-3 text-center">
+                <div class="flex items-center justify-center md:justify-start gap-3">
+                  <div class="w-4 h-4 rounded bg-emerald-500"></div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-700">Confirmadas</p>
+                    <p class="text-lg font-bold text-gray-900">
+                      {{ reportEstado().confirmadas }} ({{ reportEstado().pConfirmadas }}%)
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center justify-center md:justify-start gap-3">
+                  <div class="w-4 h-4 rounded bg-red-500"></div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-700">Canceladas</p>
+                    <p class="text-lg font-bold text-gray-900">
+                      {{ reportEstado().canceladas }} ({{ reportEstado().pCanceladas }}%)
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (activeView() === 'eventos') {
+          <!-- Gráfico de Eventos: comparativa habitaciones vs eventos -->
+          <div class="p-2 sm:p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">
+              Comparativa Habitaciones vs Eventos
+              <br>
+              (Reservas Confirmadas)
+            </h3>
+
+            <div class="flex flex-col md:flex-row items-center justify-center gap-10">
+              <!-- Donut: habitaciones vs eventos -->
+              <div class="relative w-52 h-52">
+                <svg viewBox="0 0 36 36" class="w-full h-full -rotate-90">
+                  <!-- fondo -->
+                  <circle
+                    cx="18" cy="18" r="15.9155"
+                    fill="none"
+                    stroke="#e5e7eb"
+                    stroke-width="3" />
+                  <!-- habitaciones (azul) -->
+                  <circle
+                    cx="18" cy="18" r="15.9155"
+                    fill="none"
+                    stroke="#4f46e5"
+                    stroke-width="3"
+                    stroke-dasharray="50 50"
+                    stroke-dashoffset="25" />
+                  <!-- eventos (morado) -->
+                  <circle
+                    cx="18" cy="18" r="15.9155"
+                    fill="none"
+                    stroke="#8b5cf6"
+                    stroke-width="3"
+                    stroke-dasharray="50 50"
+                    stroke-dashoffset="-25" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="text-center">
+                    <p class="text-xs text-gray-500">Total confirmadas</p>
+                    <p class="text-lg font-bold text-gray-900">
+                      {{ reportTotals().reservasHabitaciones + reportTotals().reservasEventos }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Leyenda con datos reales -->
+              <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-4 h-4 rounded bg-indigo-600"></div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-700">Habitaciones</p>
+                    <p class="text-lg font-bold text-gray-900">
+                      {{ reportTotals().reservasHabitaciones }} reservas
+                    </p>
+                  </div>
+                </div>
+                <div class="flex items-center gap-3">
+                  <div class="w-4 h-4 rounded bg-purple-500"></div>
+                  <div>
+                    <p class="text-sm font-medium text-gray-700">Eventos</p>
+                    <p class="text-lg font-bold text-gray-900">
+                      {{ reportTotals().reservasEventos }} reservas
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (activeView() === 'ingresos') {
+          <!-- Gráfico de Ingresos -->
+          <div class="p-2 sm:p-6 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">
+              Gráfico de Ingresos
+            </h3>
+
+            <div class="space-y-6">
+              <!-- Habitaciones -->
+              <div>
+                <div class="flex justify-between mb-1 text-xs sm:text-sm">
+                  <span class="font-medium text-gray-700">Habitaciones</span>
+                  <span class="font-semibold text-indigo-700">
+                    S/. {{ reportTotals().ingresosHabitaciones | number }}.00
+                  </span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-2 sm:h-3">
+                  <div
+                    class="h-3 rounded-full bg-indigo-500"
+                    [style.width.%]="reportTotals().ingresosTotal
+                      ? (reportTotals().ingresosHabitaciones * 100 / reportTotals().ingresosTotal)
+                      : 0">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Eventos -->
+              <div>
+                <div class="flex justify-between mb-1 text-sm">
+                  <span class="font-medium text-gray-700">Eventos</span>
+                  <span class="font-semibold text-purple-700">
+                    S/. {{ reportTotals().ingresosEventos | number }}.00
+                  </span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-3">
+                  <div
+                    class="h-3 rounded-full bg-purple-500"
+                    [style.width.%]="reportTotals().ingresosTotal
+                      ? (reportTotals().ingresosEventos * 100 / reportTotals().ingresosTotal)
+                      : 0">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Total -->
+              <div>
+                <div class="flex justify-between mb-1 text-sm">
+                  <span class="font-medium text-gray-700">Ingresos Totales</span>
+                  <span class="font-semibold text-teal-700">
+                    S/. {{ reportTotals().ingresosTotal | number }}.00
+                  </span>
+                </div>
+                <div class="w-full bg-gray-100 rounded-full h-3">
+                  <div
+                    class="h-3 rounded-full bg-teal-500"
+                    style="width: 100%">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+
+        @if (activeView() === 'mensual') {
+          <div class="p-2 sm:p-6 mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+              <h3 class="text-xl font-bold text-gray-900">
+                Reporte Mensual - diciembre de 2025
+              </h3>
+              <button
+                type="button"
+                (click)="downloadMonthlyExcel()"
+                class="w-full md:w-auto inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-purple-600 text-purple-700 hover:bg-purple-50 text-sm font-semibold transition-colors cursor-pointer">
+                <i class="ri-file-excel-2-line text-lg"></i>
+                Descargar Excel
+              </button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div class="text-center p-4 bg-gray-50 rounded-lg">
+                <p class="text-sm text-gray-600 mb-2">Total Reservas</p>
+                <p class="text-3xl font-bold text-gray-900">{{ monthlyReport().total }}</p>
+              </div>
+              <div class="text-center p-4 bg-green-50 rounded-lg">
+                <p class="text-sm text-gray-600 mb-2">Confirmadas</p>
+                <p class="text-3xl font-bold text-green-600">{{ monthlyReport().confirmadas }}</p>
+              </div>
+              <div class="text-center p-4 bg-red-50 rounded-lg">
+                <p class="text-sm text-gray-600 mb-2">Canceladas</p>
+                <p class="text-3xl font-bold text-red-600">{{ monthlyReport().canceladas }}</p>
+              </div>
+              <div class="text-center p-4 bg-teal-50 rounded-lg">
+                <p class="text-sm text-gray-600 mb-2">Ingresos</p>
+                <p class="text-3xl font-bold text-teal-600">S/. {{ monthlyReport().ingresos | number}}</p>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

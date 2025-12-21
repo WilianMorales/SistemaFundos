@@ -1,0 +1,77 @@
+<!-- BARRA SUPERIOR -->
+<header class="w-full sticky top-0 z-40 bg-purple-700 text-white text-xs">
+  <div class="max-w-6xl mx-auto flex items-center justify-between py-2 px-4">
+
+    <div class="flex items-center gap-2">
+      <i class="text-lg">🏡</i>
+      <span>Fundo Camino Real</span> | <span>📞 123456789</span>
+    </div>
+
+    <div class="hidden sm:flex items-center gap-6">
+      @if (isLoggedIn()) {
+        <span class="text-white">Bienvenido <strong class="text-amber-300">{{ userName() }}</strong></span>
+        <a routerLink="/perfil" class="hover:underline cursor-pointer font-bold hover:text-amber-300">Perfil</a>
+        <a routerLink="/dashboard" class="hover:underline cursor-pointer font-bold hover:text-amber-300">Dashboard</a>
+        <a (click)="logout()" class="hover:underline cursor-pointer ml-3 flex items-center gap-1 font-bold hover:text-amber-300">
+          <i class="ri-logout-box-r-line text-lg"></i> Cerrar sesión
+        </a>
+      } @else {
+        <a routerLink="/registrar" class="hover:underline cursor-pointer">Registrar</a>
+        <a routerLink="/login" class="hover:underline cursor-pointer">Login</a>
+      }
+    </div>
+
+    <!-- BOTÓN HAMBURGUESA EN MÓVIL -->
+    <button (click)="menuOpen = !menuOpen"
+      class="sm:hidden text-white text-xl focus:outline-none">
+      <i class="ri-menu-line"></i>
+    </button>
+
+  </div>
+
+  <!-- NAVBAR (DESKTOP) -->
+  <nav class="hidden sm:block w-full bg-purple-600 text-white font-bold text-sm backdrop-blur-md">
+    <div class="max-w-6xl mx-auto flex justify-center gap-10 py-4">
+      <a routerLink="/" class="hover:text-amber-300 transition-colors cursor-pointer">Inicio</a>
+      <a routerLink="/reserva-habitacion" class="hover:text-amber-300 transition-colors cursor-pointer">Habitaciones</a>
+      <a routerLink="/reserva-evento" class="hover:text-amber-300 transition-colors cursor-pointer">Reservar Evento</a>
+      <a routerLink="/contacto" class="hover:text-amber-300 transition-colors cursor-pointer">Contacto</a>
+      <a routerLink="/ubicanos" class="hover:text-amber-300 transition-colors cursor-pointer">Ubicanos</a>
+    </div>
+  </nav>
+
+  <!-- NAVBAR (MÓVIL) -->
+  <nav
+    class="sm:hidden bg-purple-600 text-white font-bold text-sm backdrop-blur-md transition-all duration-300 overflow-hidden"
+    [style.maxHeight]="menuOpen ? '400px' : '0px'">
+
+    <div class="flex flex-col items-center px-6 gap-4 py-4">
+
+      <a routerLink="/" class="hover:text-amber-300">Inicio</a>
+      <a routerLink="/reserva-habitacion" class="hover:text-amber-300">Habitaciones</a>
+      <a routerLink="/reserva-evento" class="hover:text-amber-300">Reserva Evento</a>
+      <a routerLink="/contacto" class="hover:text-amber-300">Contacto</a>
+      <a routerLink="/ubicanos" class="hover:text-amber-300">Ubicanos</a>
+
+      <hr class="border-purple-400 w-full">
+
+      <!-- Sección inferior en móvil -->
+      @if (!isLoggedIn()) {
+        <a routerLink="/registrar" class="hover:text-amber-300">Registrar</a>
+        <a routerLink="/login" class="hover:text-amber-300">Login</a>
+      } @else {
+        <span class="text-white">Bienvenido <strong class="text-amber-300">{{ userName() }}</strong></span>
+
+        <div class="flex items-center gap-6">
+          <a routerLink="/perfil" class="hover:text-amber-300">Perfil</a>
+          <a routerLink="/dashboard" class="hover:text-amber-300">Dashboard</a>
+          <a (click)="logout()" class="flex items-center gap-2 hover:text-amber-300">
+            <i class="ri-logout-box-r-line"></i> Cerrar sesión
+          </a>
+        </div>
+      }
+    </div>
+
+  </nav>
+</header>
+

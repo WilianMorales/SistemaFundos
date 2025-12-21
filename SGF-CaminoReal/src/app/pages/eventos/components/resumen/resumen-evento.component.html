@@ -1,0 +1,80 @@
+<div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-200">
+
+  <h2 class="text-3xl font-extrabold text-gray-900 mb-6 text-center">
+    Resumen de Reserva
+  </h2>
+
+  <div class="space-y-4 mb-6">
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-600">Tipo de Evento</span>
+      <span class="font-semibold text-gray-900">{{ tipoEvento }}</span>
+    </div>
+
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-600">Espacio</span>
+      <span class="font-semibold text-gray-900">{{ espacio }}</span>
+    </div>
+
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-600">Fecha</span>
+      <span class="font-semibold text-gray-900">{{ fecha }}</span>
+    </div>
+
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-600">Hora</span>
+      <span class="font-semibold text-gray-900">{{ hora }}</span>
+    </div>
+
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-600">Duración</span>
+      <span class="font-semibold text-gray-900">{{ duracion }} horas</span>
+    </div>
+
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-600">Número de Invitados</span>
+      <span class="font-semibold text-gray-900">{{ invitados }}</span>
+    </div>
+
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-600">Renta del Espacio</span>
+      <span class="font-semibold text-gray-900">S/.{{ rentaEspacio }}</span>
+    </div>
+
+    <div class="flex justify-between py-3 border-b border-gray-200">
+      <span class="text-gray-600">Costo por Persona</span>
+      <span class="font-semibold text-gray-900">
+        S/.{{ costoPersona }} x {{ invitados }}
+      </span>
+    </div>
+  </div>
+
+  <div class="bg-purple-50 p-5 rounded-xl mb-6 border border-purple-100">
+    <div class="flex justify-between items-center">
+      <span class="text-xl font-bold text-gray-900">Total</span>
+      <span class="text-3xl font-extrabold text-purple-700">
+        S/.{{ total }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Botón de pago -->
+  <button type="button" (click)="onPagar()"
+    class="w-full flex justify-center items-center gap-2 bg-purple-700 hover:bg-purple-800 text-white px-6 py-4 rounded-xl text-lg font-semibold transition-all shadow-md hover:shadow-lg mb-4 cursor-pointer">
+    <i class="ri-secure-payment-line text-xl"></i>
+    Proceder al Pago
+  </button>
+
+  <!-- Botón de cancelar reserva -->
+  <button (click)="onCancelar()"
+    class="w-full flex justify-center items-center gap-2 border border-red-500 text-red-500 hover:bg-red-50 px-6 py-4 rounded-xl text-lg font-semibold transition-all shadow-sm hover:shadow-md cursor-pointer">
+    <i class="ri-close-line text-xl"></i>
+    Cancelar Reserva
+  </button>
+
+  <!-- Nota de seguridad -->
+  <p class="text-center text-sm text-gray-500 mt-4 flex justify-center items-center gap-1">
+    <i class="ri-lock-line"></i>
+    Pago seguro con encriptación SSL
+  </p>
+
+</div>

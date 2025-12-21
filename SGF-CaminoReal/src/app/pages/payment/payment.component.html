@@ -1,0 +1,400 @@
+<app-hero />
+
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    @if (booking) {
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Columna principal -->
+      <div class="lg:col-span-2">
+        <div class="bg-white rounded-xl shadow-lg p-8">
+          <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()">
+          <!-- Info huésped -->
+          <div class="border-b border-gray-200 pb-8 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6">Información del Contacto</h3>
+            <div class="space-y-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Nombre Completo *
+                </label>
+                <input
+                  formControlName="fullName"
+                  type="text"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" />
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    DNI/PASAPORTE *
+                  </label>
+                  <input
+                    formControlName="dnipassport"
+                    type="text"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    RUC (opcional)
+                  </label>
+                  <input
+                    formControlName="ruc"
+                    type="number"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Email *
+                  </label>
+                  <input
+                    formControlName="email"
+                    type="email"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Teléfono *
+                  </label>
+                  <input
+                    formControlName="phone"
+                    type="tel"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-sm" />
+                </div>
+              </div>
+
+              @if(booking.type === 'room') {
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Dirección (opcional)
+                  </label>
+                  <input
+                    formControlName="address"
+                    type="text"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-transparent text-sm" />
+                </div>
+              }
+
+              @if (booking.type === 'event') {
+                <div class="mb-4">
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Empresa / Organización (opcional)
+                  </label>
+                  <input
+                    formControlName="company"
+                    type="text"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-transparent text-sm" />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Solicitudes Especiales (opcional)
+                  </label>
+                  <textarea
+                    formControlName="specialRequests"
+                    rows="3"
+                    placeholder="Decoración especial, restricciones alimentarias, equipos adicionales, etc."
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-transparent text-sm resize-none"></textarea>
+                  <p class="text-xs text-gray-400 mt-1 text-right">0/500 caracteres</p>
+                </div>
+              }
+            </div>
+          </div>
+
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Información de Pago</h2>
+
+          <!-- Métodos de pago -->
+          <div class="mb-8">
+            <label class="block text-sm font-medium text-gray-700 mb-4">
+              Método de Pago
+            </label>
+            <div class="grid grid-cols-3 gap-4">
+              <button
+                type="button"
+                (click)="selectMethod('card')"
+                [class.border-purple-600]="paymentForm.value.method === 'card'"
+                [class.bg-purple-50]="paymentForm.value.method === 'card'"
+                class="p-4 border-2 rounded-lg transition-all cursor-pointer border-gray-300 flex flex-col items-center text-gray-800">
+                <i class="ri-bank-card-line text-2xl mb-2"></i>
+                <p class="font-semibold text-sm">Tarjeta de Crédito/Débito</p>
+              </button>
+
+              <button
+                type="button"
+                (click)="selectMethod('qr')"
+                [class.border-purple-600]="paymentForm.value.method === 'qr'"
+                [class.bg-purple-50]="paymentForm.value.method === 'qr'"
+                class="p-4 border-2 rounded-lg transition-all cursor-pointer border-gray-300 flex flex-col items-center text-gray-800">
+                <i class="ri-qr-code-line text-2xl mb-2"></i>
+                <p class="font-semibold text-sm">QR</p>
+              </button>
+
+              <button
+                type="button"
+                (click)="selectMethod('paypal')"
+                [class.border-purple-600]="paymentForm.value.method === 'paypal'"
+                [class.bg-purple-50]="paymentForm.value.method === 'paypal'"
+                class="p-4 border-2 rounded-lg transition-all cursor-pointer border-gray-300 hover:border-gray-400 flex flex-col items-center text-gray-800">
+                <i class="ri-paypal-line text-2xl mb-2"></i>
+                <p class="font-semibold text-sm">PayPal</p>
+              </button>
+            </div>
+          </div>
+
+          @if (paymentForm.value.method === 'card') {
+            <div class="space-y-6 mb-6 py-2">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Número de Tarjeta *
+                </label>
+                <input
+                  formControlName="cardNumber"
+                  placeholder="1234 5678 9012 3456"
+                  type="text"
+                  (input)="onCardNumberInput($event)"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg  focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-transparent text-sm" />
+              </div>
+
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                  Nombre del Titular *
+                </label>
+                <input
+                  formControlName="cardName"
+                  placeholder="Como aparece en la tarjeta"
+                  type="text"
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg  focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-transparent text-sm" />
+              </div>
+
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    Fecha de Expiración *
+                  </label>
+                  <input
+                    formControlName="expiryDate"
+                    placeholder="MM/AA"
+                    type="text"
+                    (input)="onExpiryInput($event)"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg  focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-transparent text-sm" />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700 mb-2">
+                    CVV *
+                  </label>
+                  <input
+                    formControlName="cvv"
+                    placeholder="123"
+                    type="text"
+                    (input)="onCvvInput($event)"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg  focus:ring-2 focus:outline-none focus:ring-purple-500 focus:border-transparent text-sm" />
+                </div>
+              </div>
+            </div>
+          } @else if (paymentForm.value.method === 'qr') {
+            <div class="mb-8 space-y-4 text-center py-2">
+              <div class="flex justify-center mb-4">
+                <img
+                  src="assets/payments/izipay-logo.png"
+                  alt="Izipay"
+                  class="h-8 object-contain" />
+              </div>
+
+              <p class="text-sm text-gray-700">
+                Escanea este código QR con tu app bancaria o billetera para completar el pago.
+              </p>
+
+              <p class="text-base font-semibold text-gray-900">
+                FUNDO CAMINO REAL S.A.C.
+              </p>
+
+              <!-- Aquí puedes poner una imagen de QR estática de prueba -->
+              <div class="flex justify-center">
+                <img
+                  src="assets/payments/qr-code.png"
+                  alt="QR de pago"
+                  class="w-48 h-48 border border-gray-200 rounded-lg shadow-sm" />
+              </div>
+
+              <div class="flex items-center justify-center gap-4 mb-4">
+                <div
+                  class="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center">
+                  <img src="assets/payments/plin.webp" alt="plin" class="w-6 h-6" />
+                </div>
+                <!-- Icono tipo Yape/Izipay -->
+                <div
+                  class="w-10 h-10 rounded-full bg-purple-600/20 flex items-center justify-center">
+                  <img src="assets/payments/yape.webp" alt="plin" class="w-6 h-6" />
+                </div>
+              </div>
+
+              <p class="text-xs text-gray-500 text-center">
+                Luego de realizar el pago, tu reserva se confirmará automáticamente.
+              </p>
+            </div>
+          } @else if (paymentForm.value.method === 'paypal') {
+            <div class="mb-8 space-y-4">
+              <div class="text-center py-8">
+                <i class="ri-paypal-line text-6xl text-blue-600 mb-4"></i>
+                <p class="text-gray-600 mb-4">Serás redirigido a PayPal para completar el pago de forma segura</p>
+              </div>
+            </div>
+          }
+
+            <div class="flex items-start gap-2 mb-4">
+              <input
+                type="checkbox"
+                formControlName="acceptTerms"
+                class="mt-1 h-4 w-4 text-purple-700 m-3 border-gray-300 rounded focus:ring-purple-500 cursor-pointer" />
+              <p class="text-sm text-gray-700">
+                He leído y acepto las
+                <a routerLink="/terminos" class="text-purple-700 underline hover:text-purple-900 cursor-pointer">
+                  Términos y condiciones
+                </a>
+                y
+                <a routerLink="/privacidad" class="text-purple-700 underline hover:text-purple-900 cursor-pointer">
+                  Política de privacidad
+                </a>
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              [disabled]="paymentForm.invalid"
+              class="w-full bg-purple-600 hover:bg-purple-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap text-lg disabled:bg-gray-400 disabled:cursor-not-allowed">
+              <i class="ri-secure-payment-line mr-2"></i>
+              Pagar S/. {{ amount | number:'1.2-2' }}
+            </button>
+
+            <p class="text-center text-sm text-gray-500 mt-4">
+              <i class="ri-shield-check-line mr-1"></i>
+              Tus datos están protegidos con encriptación SSL de 256 bits
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Resumen de reserva -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-xl shadow-lg p-8 sticky top-4">
+          <h3 class="text-xl font-bold text-gray-900 mb-6">
+            {{ booking.type === 'room' ? 'Resumen de Reserva' : 'Resumen del Evento' }}
+          </h3>
+
+          @if (booking.type === 'room') {
+          <div class="space-y-4 mb-6">
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Habitación</span>
+              <span class="font-semibold text-sm text-right">{{ booking.habitacion }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Check-in</span>
+              <span class="font-semibold text-sm">{{ booking.checkIn }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Check-out</span>
+              <span class="font-semibold text-sm">{{ booking.checkOut }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Huéspedes</span>
+              <span class="font-semibold">{{ booking.huespedes }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Noches</span>
+              <span class="font-semibold">{{ booking.noches }}</span>
+            </div>
+            <div class="flex justify-between py-2 border-b border-gray-200">
+              <span class="text-gray-600">Precio por noche</span>
+              <span class="font-semibold">S/.{{ booking.precioxnoche }}</span>
+            </div>
+          </div>
+          }
+          @else {
+            <div class="space-y-4 mb-6">
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span class="text-gray-600">Tipo de Evento</span>
+                <span class="font-semibold text-sm text-right">{{ booking.tipoEvento }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span class="text-gray-600">Espacio</span>
+                <span class="font-semibold text-sm text-right">{{ booking.espacio }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span class="text-gray-600">Fecha</span>
+                <span class="font-semibold text-sm">{{ booking.fecha }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span class="text-gray-600">Hora</span>
+                <span class="font-semibold text-sm">{{ booking.hora }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span class="text-gray-600">Duración</span>
+                <span class="font-semibold text-sm">{{ booking.duracion }}</span>
+              </div>
+              <div class="flex justify-between py-2 border-b border-gray-200">
+                <span class="text-gray-600">Invitados</span>
+                <span class="font-semibold text-sm">{{ booking.invitados }}</span>
+              </div>
+            </div>
+          }
+
+          <div class="bg-purple-50 rounded-lg p-4 mb-6">
+            <div class="mb-4">
+              <div class="flex justify-between items-center mb-2">
+                <span class="text-sm font-semibold text-gray-900">Subtotal reserva</span>
+                <span class="text-sm font-semibold text-amber-500">S/. {{ subtotal | number:'1.2-2' }}</span>
+              </div>
+              <div class="flex justify-between text-sm text-gray-800 mb-1">
+                <span>Impuestos</span>
+                <span>S/. {{ tax | number:'1.2-2' }}</span>
+              </div>
+              <div class="flex justify-between text-sm text-gray-800">
+                <span>Importe del servicio</span>
+                <span>S/. {{ serviceFee | number:'1.2-2' }}</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-lg font-bold text-gray-900">Reserva total</span>
+              <span class="text-2xl font-bold text-purple-600">S/.{{ amount | number : '1.2-2' }}</span>
+            </div>
+          </div>
+
+          <div class="space-y-3 text-sm text-gray-600">
+            <div class="flex items-start">
+              <i class="ri-checkbox-circle-line text-teal-600 mr-2 shrink-0"></i>
+              <span>Cancelación gratuita hasta 24h antes según políticas del establecimiento</span>
+            </div>
+            <div class="flex items-start">
+              <i class="ri-checkbox-circle-line text-teal-600 mr-2 shrink-0"></i>
+              <span>Confirmación inmediata por email</span>
+            </div>
+            <div class="bg-purple-50 rounded-lg p-4">
+              <div class="flex items-start">
+                <i class="ri-shield-check-line text-purple-600 text-xl mr-3"></i>
+                <div>
+                  <p class="text-sm font-semibold text-gray-900 mr-2 mt-1 shrink-0">Pago 100% Seguro</p>
+                </div>
+              </div>
+            </div>
+            <button
+              type="button"
+              (click)="cancelarPago()"
+              class="w-full flex items-center justify-center text-base mt-8 font-semibold text-purple-700 bg-white border border-purple-600 hover:bg-purple-50 rounded-lg py-2 px-4 transition-all cursor-pointer">
+              <i class="ri-arrow-go-back-line mr-2"></i>
+              Cancelar pago
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</section>
+
+@if (showSuccess() && successData()) {
+  <app-payment-success-modal
+    [data]="successData()!"
+    (close)="handleSuccessClose($event)"
+  />
+}

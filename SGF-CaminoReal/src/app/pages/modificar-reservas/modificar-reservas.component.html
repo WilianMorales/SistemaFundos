@@ -1,0 +1,142 @@
+@if (reserva()) {
+
+<!-- HERO -->
+<div class="relative bg-cover bg-center text-white py-20" style="background-image: url('/assets/img/fundo-bg.jpeg');">
+
+  <div class="absolute inset-0 bg-black/50"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 text-center">
+    <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
+      <i class="text-2xl text-white" [class.ri-edit-line]="true">
+      </i>
+    </div>
+
+    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+      Modificar Reserva
+    </h1>
+
+    <p class="text-xl text-purple-100 max-w-3xl mx-auto">
+      Actualiza los datos de tu reserva de
+      {{ reserva()!.tipo === 'event' ? 'evento' : 'habitación' }}.
+    </p>
+  </div>
+</div>
+
+<!-- CONTENIDO -->
+<section class="py-12">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="bg-white rounded-xl shadow-lg p-8">
+
+      <!-- HEADER -->
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">
+            Reserva de {{ reserva()!.tipo === 'event' ? 'Evento' : 'Habitación' }}
+          </h2>
+          <p class="text-gray-600">
+            ID: {{ reserva()!.id }}
+          </p>
+        </div>
+
+        <span class="px-4 py-2 rounded-full text-sm font-semibold"
+          [class.bg-green-100]="reserva()!.estado === 'confirmada'"
+          [class.text-green-800]="reserva()!.estado === 'confirmada'">
+          {{ reserva()!.estado }}
+        </span>
+      </div>
+
+      <!-- DETALLES -->
+      <div class="space-y-6">
+
+        <!-- EVENTO -->
+        @if (reserva()!.tipo === 'event') {
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">
+            Información del Evento
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="date" class="input" [ngModel]="toInputDate(reserva()!.fechaEvento)"
+              (ngModelChange)="setFechaEvento($event)" [min]="todayInputDate" />
+            <input type="time" class="input" [(ngModel)]="reserva()!.horaEvento" />
+            <input type="number" class="input bg-gray-100 text-gray-400 cursor-not-allowed border-gray-300" [(ngModel)]="reserva()!.invitados" disabled />
+            <select class="input bg-gray-100 text-gray-400 cursor-not-allowed border-gray-300" [(ngModel)]="reserva()!.duracionHoras" disabled>
+              <option [ngValue]="2">2 horas</option>
+              <option [ngValue]="6">6 horas</option>
+              <option [ngValue]="9">9 horas</option>
+              <option [ngValue]="12">12 horas</option>
+              <option [ngValue]="24">24 horas</option>
+            </select>
+          </div>
+        </div>
+        }
+
+        <!-- HABITACIÓN -->
+        @if (reserva()!.tipo === 'room') {
+        <div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">
+            Información del Hospedaje
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <input type="date" class="input" [ngModel]="toInputDate(reserva()!.checkIn)"
+              (ngModelChange)="setCheckIn($event)" [min]="todayInputDate" />
+            <input type="date" class="input" [ngModel]="toInputDate(reserva()!.checkOut)"
+              (ngModelChange)="setCheckOut($event)" [min]="todayInputDate" />
+            <select class="input bg-gray-100 text-gray-400 cursor-not-allowed border-gray-300" [(ngModel)]="reserva()!.huespedes" disabled="" >
+              <option [ngValue]="1">1</option>
+              <option [ngValue]="2">2</option>
+              <option [ngValue]="3">3</option>
+              <option [ngValue]="4">4</option>
+              <option [ngValue]="6">+6</option>
+            </select>
+          </div>
+        </div>
+        }
+
+        <!-- CLIENTE -->
+        <div class="border-t border-gray-200 pt-6">
+          <h3 class="text-lg font-semibold text-gray-900 mb-4">
+            Información del Cliente
+          </h3>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <input type="text" class="input" placeholder="Nombre" [(ngModel)]="reserva()!.clienteNombre" />
+            <input type="email" class="input" placeholder="Email" [(ngModel)]="reserva()!.clienteEmail" />
+            <input type="tel" class="input" placeholder="Teléfono" [(ngModel)]="reserva()!.clienteTelefono" />
+          </div>
+        </div>
+
+        <!-- TOTAL -->
+        <div class="bg-indigo-50 rounded-lg p-6">
+          <div class="flex justify-between items-center">
+            <span class="text-gray-700">Nuevo Total</span>
+            <span class="text-3xl font-bold text-indigo-600">
+              ${{ reserva()!.total }}
+            </span>
+          </div>
+
+          @if (reserva()!.tipo === 'room') {
+          <p class="text-sm text-gray-600 text-right">
+            {{ reserva()!.noches }} noches
+          </p>
+          }
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="flex gap-4">
+          <button class="flex-1 cursor-pointer bg-indigo-600 text-white px-6 py-3 rounded-lg font-semibold"
+            (click)="guardarCambios()">
+            Guardar Cambios
+          </button>
+          <button class="flex-1 cursor-pointer bg-gray-200 px-6 py-3 rounded-lg font-semibold" (click)="cancelar()">
+            Cancelar
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+}

@@ -1,0 +1,160 @@
+<app-hero />
+
+<section class="py-18">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Selecciona el Tipo de Evento</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (tipo of tiposEvento(); track tipo.id) {
+        <app-card-evento
+          [nombre]="tipo.nombre"
+          [icon]="tipo.icon"
+          [descripcion]="tipo.descripcion"
+          [minCap]="tipo.minCap"
+          [maxCap]="tipo.maxCap"
+          [precioPersona]="tipo.precioPersona"
+          [isSelected]="selectedTipoId() === tipo.id"
+          (select)="seleccionarTipo(tipo.id)"
+        />
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Detalles del evento -->
+@if (selectedTipo()) {
+  <section class="py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white rounded-xl shadow-lg p-8">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6">Detalles del Evento</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Fecha del Evento *</label>
+            <input
+              #fechaInput
+              type="date"
+              [min]="today"
+              [ngModel]="fechaEvento()"
+              (ngModelChange)="fechaEvento.set($event)"
+              (click)="fechaInput.showPicker()"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:border-transparent focus:outline-none focus:ring-purple-500 text-sm cursor-pointer" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Hora de Inicio *</label>
+            <input
+              #horaInput
+              type="time"
+              [ngModel]="horaInicio()"
+              (ngModelChange)="horaInicio.set($event)"
+              (click)="horaInput.showPicker()"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg cursor-pointer focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none text-sm" />
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Número de Invitados</label>
+            <input
+              type="number"
+              min="20"
+              max="300"
+              [ngModel]="invitados()"
+              (ngModelChange)="invitados.set(+($event))"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none text-sm" />
+            <p class="text-xs text-gray-500 mt-1">Mín: 20 - Máx: 300</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2">Duración (horas)</label>
+            <select
+              [ngModel]="duracion()"
+              (ngModelChange)="duracion.set(+($event))"
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg cursor-pointer focus:ring-2 focus:ring-purple-500 focus:border-transparent focus:outline-none text-sm pr-8">
+              <option [ngValue]="2">2 horas</option>
+              <option [ngValue]="6">6 horas</option>
+              <option [ngValue]="9">9 horas</option>
+              <option [ngValue]="12">12 horas</option>
+              <option [ngValue]="24">24 horas</option>
+            </select>
+          </div>
+
+          <div class="flex items-center">
+            <button
+              type="button"
+              (click)="buscarEspacios()"
+              class="w-full bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors cursor-pointer whitespace-nowrap">
+              <i class="ri-search-line mr-2"></i>
+              Buscar Espacios
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-8 p-6 bg-purple-50 rounded-lg">
+          <h4 class="font-semibold text-gray-900 mb-4">Servicios Incluidos:</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            @for (serv of serviciosIncluidos(); track $index) {
+              <div class="flex items-center text-sm text-gray-700">
+                <i class="ri-checkbox-circle-fill text-purple-600 mr-2"></i>{{ serv }}
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+}
+
+<!-- Espacios disponibles y resumen -->
+@if (hasSearched()) {
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">Espacios Disponibles</h2>
+
+      @if (!selectedEspacio()) {
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          @for (espacio of espaciosFiltrados(); track espacio.nombre) {
+            <app-card-espacio
+              [nombre]="espacio.nombre"
+              [imagen]="espacio.imagen"
+              [capacidad]="espacio.capacidad"
+              [renta]="espacio.renta"
+              [caracteristicas]="espacio.caracteristicas"
+              [isSelected]="selectedEspacio()?.nombre === espacio.nombre"
+              [isDisabled]="!espacio.estado || isEspacioReservado(espacio)"
+              (select)="seleccionarEspacioCard(espacio)"
+            />
+          }
+        </div>
+      }
+
+      @if (selectedEspacio()) {
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+          <!-- card seleccionada sola -->
+          <app-card-espacio
+            [nombre]="selectedEspacio()!.nombre"
+            [imagen]="selectedEspacio()!.imagen"
+            [capacidad]="selectedEspacio()!.capacidad"
+            [renta]="selectedEspacio()!.renta"
+            [caracteristicas]="selectedEspacio()!.caracteristicas"
+            [isSelected]="true"
+            [isDisabled]="false"
+          />
+
+          <!-- resumen evento -->
+          <app-resumen-evento
+            [tipoEvento]="selectedTipo()!.nombre"
+            [espacio]="selectedEspacio()!.nombre"
+            [fecha]="fechaEvento()"
+            [hora]="horaInicio()"
+            [duracion]="duracion()"
+            [invitados]="invitados()"
+            [rentaEspacio]="selectedEspacio()!.renta"
+            [costoPersona]="selectedTipo()!.precioPersona"
+            (cancelar)="cancelarReservaEvento()"
+            (pagar)="irAPago($event)"
+          />
+        </div>
+      }
+    </div>
+  </section>
+}

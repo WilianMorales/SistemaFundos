@@ -1,0 +1,103 @@
+<footer class="bg-gray-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+
+      <!-- Marca -->
+      <div class="space-y-4">
+        <h3 class="text-xl font-bold text-amber-300">Fundo Camino Real</h3>
+        <p class="text-gray-400 text-sm">
+          Comodidad y elegancia para unas vacaciones o reuniones inolvidables.
+        </p>
+
+        <!-- Redes sociales -->
+        <div class="flex space-x-4">
+          @for (social of socialLinks(); track social.platform) {
+            <a
+              [href]="social.url"
+              [attr.aria-label]="social.platform"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-10 h-10 flex items-center justify-center rounded-full bg-gray-800 transition-all duration-300 hover:scale-110 {{ social.class }}" >
+              <img [src]="social.icon" [alt]="social.platform" class="w-5 h-5" />
+            </a>
+          }
+        </div>
+      </div>
+
+      <!-- Enlaces rápidos -->
+      <div class="space-y-4">
+        <h4 class="text-lg font-semibold">Enlaces</h4>
+        <ul class="space-y-2">
+          <li><a routerLink="/" class="text-gray-400 hover:text-amber-400 text-sm">Inicio</a></li>
+          <li><a routerLink="/reservar-habitaciones" class="text-gray-400 hover:text-amber-400 text-sm">Reservar habitacion</a></li>
+          <li><a routerLink="/reservar-eventos" class="text-gray-400 hover:text-amber-400 text-sm">Reservar evento</a></li>
+          <li><a routerLink="/contactanos" class="text-gray-400 hover:text-amber-400 text-sm">Contáctanos</a></li>
+          <li><a routerLink="/about" class="text-gray-400 hover:text-amber-400 text-sm">Quiénes Somos</a></li>
+        </ul>
+      </div>
+
+      <!-- Legal -->
+      <div class="space-y-4">
+        <h4 class="text-lg font-semibold">Legal</h4>
+        <ul class="space-y-2">
+          <li><a class="text-gray-400 hover:text-amber-400 text-sm cursor-pointer">Política de Privacidad</a></li>
+          <li><a class="text-gray-400 hover:text-amber-400 text-sm cursor-pointer">Términos y Condiciones</a></li>
+          <li><a class="text-gray-400 hover:text-amber-400 text-sm cursor-pointer">Política de Cookies</a></li>
+          <li><a class="text-gray-400 hover:text-amber-400 text-sm cursor-pointer">Política de Cancelación</a></li>
+          <li><a class="text-gray-400 hover:text-amber-400 text-sm cursor-pointer">Aviso Legal</a></li>
+        </ul>
+      </div>
+
+      <!-- Contacto -->
+      <div class="space-y-4">
+        <h4 class="text-lg font-semibold">Contacto</h4>
+        <ul class="space-y-3 text-sm text-gray-400">
+          <li class="flex items-start space-x-3">
+            <i class="ri-map-pin-fill text-gray-200 mt-1"></i>
+            <p>Campiña la Merced, <br>Laredo</p>
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="ri-phone-fill text-gray-200"></i>
+            <p>(+51) 999-999-999</p>
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="ri-mail-fill text-gray-200"></i>
+            <p>info&#64;caminoreal.com</p>
+          </li>
+          <li class="flex items-center space-x-3">
+            <i class="ri-time-line text-gray-200"></i>
+            <p>Recepción 24/7</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <a
+          routerLink="/libro-reclamaciones"
+          aria-label="Libro de reclamaciones de CompuMax"
+        >
+          <img src="assets/img/libro-reclamaciones.webp" alt="Libro de reclamaciones CompuMax"
+              class="w-36 h-auto transition-transform duration-300 hover:scale-105 will-change-transform" loading="lazy">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Línea inferior -->
+  <div class="border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <p class="text-gray-400 text-sm">© 2025 Fundo Camino Real - Todos los derechos reservados.</p>
+        <div class="flex gap-4 text-sm text-gray-400">
+           @for (method of paymentMethods(); track method.name) {
+            <img
+              [src]="method.icon"
+              [alt]="method.name"
+              class="{{ method.class }} w-auto opacity-80 hover:opacity-100 transition-opacity duration-200"
+              loading="lazy" />
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
